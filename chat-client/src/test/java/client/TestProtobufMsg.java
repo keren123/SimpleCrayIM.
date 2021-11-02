@@ -75,6 +75,7 @@ public class TestProtobufMsg
             e.printStackTrace();
         }
     }
+
     /**
      * 构建消息 基础部分 的 Builder
      */
@@ -101,19 +102,6 @@ public class TestProtobufMsg
         return baseBuilder.setLoginRequest(lb).build();
     }
 
-    /**
-     * 构建消息 基础部分
-     */
-    public  static ProtoMsg.Message buildCommon(long seqId) {
-
-        ProtoMsg.Message.Builder mb =
-                ProtoMsg.Message
-                        .newBuilder()
-                        .setType(ProtoMsg.HeadType.LOGIN_REQUEST)
-                        .setSessionId("-1")
-                        .setSequence(seqId);
-        return mb.buildPartial();
-    }
 
 
     //第1种方式:序列化 serialization & 反序列化 Deserialization

@@ -58,6 +58,8 @@ public class TestLoginService {
         //无线等待
         ThreadUtil.sleepSeconds(Integer.MAX_VALUE);
     }
+
+
     //第1种方式:序列化 serialization & 反序列化 Deserialization
     @Test
     public void serAndDesr1() throws IOException
