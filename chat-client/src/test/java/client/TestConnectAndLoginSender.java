@@ -4,7 +4,7 @@ package client;
 import com.crazymakercircle.im.common.bean.User;
 import com.crazymakercircle.im.common.codec.SimpleProtobufDecoder;
 import com.crazymakercircle.im.common.codec.SimpleProtobufEncoder;
-import com.crazymakercircle.imClient.client.ClientSession;
+import com.crazymakercircle.imClient.session.ClientSession;
 import com.crazymakercircle.imClient.config.SystemConfig;
 import com.crazymakercircle.imClient.handler.ExceptionHandler;
 import com.crazymakercircle.imClient.handler.LoginResponseHandler;

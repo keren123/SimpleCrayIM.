@@ -1,8 +1,8 @@
 package com.crazymakercircle.imServer.processer;
 
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
-import com.crazymakercircle.imServer.server.ServerSession;
-import com.crazymakercircle.imServer.server.SessionMap;
+import com.crazymakercircle.imServer.session.ServerSession;
+import com.crazymakercircle.imServer.session.SessionMap;
 import com.crazymakercircle.util.Logger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

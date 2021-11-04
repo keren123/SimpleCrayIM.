@@ -1,11 +1,11 @@
-package com.crazymakercircle.imServer.protoBuilder;
+package com.crazymakercircle.imServer.protoConvertor;
 
 import com.crazymakercircle.im.common.ProtoInstant;
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
 import org.springframework.stereotype.Service;
 
 @Service("LoginResponceBuilder")
-public class LoginResponceBuilder {
+public class LoginResponceConverter {
 
     /**
      * 登录应答 应答消息protobuf

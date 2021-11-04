@@ -2,7 +2,7 @@ package com.crazymakercircle.imServer.processer;
 
 
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
-import com.crazymakercircle.imServer.server.ServerSession;
+import com.crazymakercircle.imServer.session.ServerSession;
 
 /**
  * 操作类

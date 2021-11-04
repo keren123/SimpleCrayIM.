@@ -3,9 +3,9 @@ package com.crazymakercircle.imServer.processer;
 import com.crazymakercircle.im.common.ProtoInstant;
 import com.crazymakercircle.im.common.bean.User;
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
-import com.crazymakercircle.imServer.protoBuilder.LoginResponceBuilder;
-import com.crazymakercircle.imServer.server.ServerSession;
-import com.crazymakercircle.imServer.server.SessionMap;
+import com.crazymakercircle.imServer.protoConvertor.LoginResponceConverter;
+import com.crazymakercircle.imServer.session.ServerSession;
+import com.crazymakercircle.imServer.session.SessionMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service("LoginProcesser")
 public class LoginProcesser extends AbstractServerProcesser {
     @Autowired
-    LoginResponceBuilder loginResponceBuilder;
+    LoginResponceConverter loginResponceConverter;
 
     @Override
     public ProtoMsg.HeadType type() {
@@ -37,7 +37,7 @@ public class LoginProcesser extends AbstractServerProcesser {
                     ProtoInstant.ResultCodeEnum.NO_TOKEN;
             //构造登录失败的报文
             ProtoMsg.Message response =
-                    loginResponceBuilder.loginResponce(resultcode, seqNo, "-1");
+                    loginResponceConverter.loginResponce(resultcode, seqNo, "-1");
             //发送登录失败的报文
             session.writeAndFlush(response);
             return false;
@@ -54,7 +54,7 @@ public class LoginProcesser extends AbstractServerProcesser {
                 ProtoInstant.ResultCodeEnum.SUCCESS;
         //构造登录成功的报文
         ProtoMsg.Message response =
-                loginResponceBuilder.loginResponce(
+                loginResponceConverter.loginResponce(
                         resultcode, seqNo, session.getSessionId());
         //发送登录成功的报文
         session.writeAndFlush(response);

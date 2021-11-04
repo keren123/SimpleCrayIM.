@@ -9,6 +9,7 @@ import com.crazymakercircle.imClient.command.LoginConsoleCommand;
 import com.crazymakercircle.imClient.command.LogoutConsoleCommand;
 import com.crazymakercircle.imClient.sender.ChatSender;
 import com.crazymakercircle.imClient.sender.LoginSender;
+import com.crazymakercircle.imClient.session.ClientSession;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoop;

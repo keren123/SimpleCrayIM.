@@ -1,4 +1,4 @@
-package com.crazymakercircle.imClient.client;
+package com.crazymakercircle.imClient.session;
 
 import com.crazymakercircle.im.common.bean.User;
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
@@ -46,10 +46,12 @@ public class ClientSession {
 
     //绑定通道
     public ClientSession(Channel channel) {
-        this.channel = channel;
+      this.channel = channel;
         this.sessionId = String.valueOf(-1);
         channel.attr(ClientSession.SESSION_KEY).set(this);
     }
+
+
     //登录成功之后,设置sessionId
     public static void loginSuccess(
             ChannelHandlerContext ctx, ProtoMsg.Message pkg) {

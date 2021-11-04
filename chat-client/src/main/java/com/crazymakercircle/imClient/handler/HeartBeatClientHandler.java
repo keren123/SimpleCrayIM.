@@ -3,8 +3,8 @@ package com.crazymakercircle.imClient.handler;
 
 import com.crazymakercircle.im.common.bean.User;
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
-import com.crazymakercircle.imClient.client.ClientSession;
-import com.crazymakercircle.imClient.protoBuilder.HeartBeatMsgBuilder;
+import com.crazymakercircle.imClient.session.ClientSession;
+import com.crazymakercircle.imClient.protoConverter.HeartBeatMsgConverter;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -26,8 +26,8 @@ public class HeartBeatClientHandler extends ChannelInboundHandlerAdapter {
             throws Exception {
         ClientSession session = ClientSession.getSession(ctx);
         User user = session.getUser();
-        HeartBeatMsgBuilder builder =
-                new HeartBeatMsgBuilder(user, session);
+        HeartBeatMsgConverter builder =
+                new HeartBeatMsgConverter(user, session);
 
         ProtoMsg.Message message = builder.buildMsg();
         //发送心跳

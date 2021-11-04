@@ -3,7 +3,7 @@ package com.crazymakercircle.imClient.handler;
 
 import com.crazymakercircle.im.common.ProtoInstant;
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
-import com.crazymakercircle.imClient.client.ClientSession;
+import com.crazymakercircle.imClient.session.ClientSession;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

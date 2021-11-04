@@ -25,7 +25,7 @@ public class TestProtobufMsg
 
 
 
-    static class LoginRequestHandler extends ChannelInboundHandlerAdapter
+    static class MockLoginRequestHandler extends ChannelInboundHandlerAdapter
     {
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception
@@ -51,7 +51,7 @@ public class TestProtobufMsg
                   // 半包的处理
                 ch.pipeline().addLast("decoder", new SimpleProtobufDecoder());
                 ch.pipeline().addLast("encoder", new SimpleProtobufEncoder());
-                ch.pipeline().addLast("inHandler", new LoginRequestHandler());
+                ch.pipeline().addLast("inHandler", new MockLoginRequestHandler());
 
             }
         };

@@ -2,37 +2,20 @@ package test.cases;
 
 
 import com.crazymakercircle.im.common.bean.User;
-import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
-import com.crazymakercircle.im.common.codec.SimpleProtobufDecoder;
-import com.crazymakercircle.im.common.codec.SimpleProtobufEncoder;
-import com.crazymakercircle.imServer.handler.LoginRequestHandler;
-import com.crazymakercircle.imServer.server.ServerSession;
-import com.crazymakercircle.imServer.server.SessionMap;
-import com.crazymakercircle.imServer.starter.ServerApplication;
+import com.crazymakercircle.imServer.session.ServerSession;
+import com.crazymakercircle.imServer.session.SessionMap;
 import com.crazymakercircle.util.JsonUtil;
 import com.crazymakercircle.util.Logger;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.util.Attribute;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONUtil;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.management.Query;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.ByteOrder;
 import java.util.List;
 
 @Slf4j
-public class TestSession {
+public class TestServerSession {
 
 
     //测试用例： 会话的双向绑定

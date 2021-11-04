@@ -2,7 +2,7 @@ package com.crazymakercircle.imServer.handler;
 
 import com.crazymakercircle.cocurrent.FutureTaskScheduler;
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
-import com.crazymakercircle.imServer.server.ServerSession;
+import com.crazymakercircle.imServer.session.ServerSession;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;

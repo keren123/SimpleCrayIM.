@@ -2,7 +2,7 @@ package com.crazymakercircle.imClient.sender;
 
 import com.crazymakercircle.im.common.bean.User;
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
-import com.crazymakercircle.imClient.client.ClientSession;
+import com.crazymakercircle.imClient.session.ClientSession;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.util.concurrent.Future;
@@ -41,7 +41,7 @@ public abstract class BaseSender {
             return;
         }
 
-        Channel channel=getSession().getChannel();
+        Channel channel = getSession().getChannel();
         ChannelFuture f = channel.writeAndFlush(message);
         f.addListener(new GenericFutureListener<Future<? super Void>>() {
             @Override

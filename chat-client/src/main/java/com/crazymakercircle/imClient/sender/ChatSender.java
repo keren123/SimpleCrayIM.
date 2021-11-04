@@ -2,7 +2,7 @@ package com.crazymakercircle.imClient.sender;
 
 import com.crazymakercircle.im.common.bean.ChatMsg;
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
-import com.crazymakercircle.imClient.protoBuilder.ChatMsgBuilder;
+import com.crazymakercircle.imClient.protoConverter.ChatMsgConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class ChatSender extends BaseSender {
         chatMsg.setTo(touid);
         chatMsg.setMsgId(System.currentTimeMillis());
         ProtoMsg.Message message =
-                ChatMsgBuilder.buildChatMsg(chatMsg, getUser(), getSession());
+                ChatMsgConverter.buildChatMsg(chatMsg, getUser(), getSession());
 
         super.sendMsg(message);
     }

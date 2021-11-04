@@ -1,4 +1,4 @@
-package com.crazymakercircle.imServer.server;
+package com.crazymakercircle.imServer.session;
 
 import com.crazymakercircle.im.common.bean.User;
 import com.crazymakercircle.util.Logger;

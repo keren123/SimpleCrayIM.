@@ -1,19 +1,19 @@
-package com.crazymakercircle.imClient.protoBuilder;
+package com.crazymakercircle.imClient.protoConverter;
 
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
-import com.crazymakercircle.imClient.client.ClientSession;
+import com.crazymakercircle.imClient.session.ClientSession;
 
 /**
  * 基础 Builder
  *
  * @author 尼恩 at  疯狂创客圈
  */
-public class BaseBuilder {
+public class BaseConverter {
     protected ProtoMsg.HeadType type;
     private long seqId;
     private ClientSession session;
 
-    public BaseBuilder(ProtoMsg.HeadType type, ClientSession session) {
+    public BaseConverter(ProtoMsg.HeadType type, ClientSession session) {
         this.type = type;
         this.session = session;
     }
@@ -22,16 +22,21 @@ public class BaseBuilder {
      * 构建消息 基础部分
      */
     public ProtoMsg.Message buildCommon(long seqId) {
+
+        return getMsgBuilder(seqId).buildPartial();
+    }
+
+    public ProtoMsg.Message.Builder getMsgBuilder(long seqId) {
         this.seqId = seqId;
 
         ProtoMsg.Message.Builder mb =
-                ProtoMsg.Message
-                        .newBuilder()
+                ProtoMsg.Message.newBuilder()
                         .setType(type)
                         .setSessionId(session.getSessionId())
                         .setSequence(seqId);
-        return mb.buildPartial();
+        return mb;
     }
+
     /**
      * 构建消息 基础部分 的 Builder
      */

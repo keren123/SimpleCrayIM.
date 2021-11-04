@@ -4,7 +4,7 @@ import com.crazymakercircle.cocurrent.CallbackTask;
 import com.crazymakercircle.cocurrent.CallbackTaskScheduler;
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
 import com.crazymakercircle.imServer.processer.LoginProcesser;
-import com.crazymakercircle.imServer.server.ServerSession;
+import com.crazymakercircle.imServer.session.ServerSession;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

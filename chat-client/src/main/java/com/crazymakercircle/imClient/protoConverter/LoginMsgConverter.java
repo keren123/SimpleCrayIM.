@@ -2,43 +2,51 @@
  * Created by 尼恩 at 疯狂创客圈
  */
 
-package com.crazymakercircle.imClient.protoBuilder;
+package com.crazymakercircle.imClient.protoConverter;
 
 import com.crazymakercircle.im.common.bean.User;
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
-import com.crazymakercircle.imClient.client.ClientSession;
+import com.crazymakercircle.imClient.session.ClientSession;
 
 
 /**
- * 登陆消息Builder
+ * 登陆消息 Converter
  */
-public class LoginMsgBuilder extends BaseBuilder {
+public class LoginMsgConverter extends BaseConverter {
     private final User user;
 
-    public LoginMsgBuilder(User user, ClientSession session) {
+    public LoginMsgConverter(User user, ClientSession session) {
         super(ProtoMsg.HeadType.LOGIN_REQUEST, session);
         this.user = user;
     }
 
     public ProtoMsg.Message build() {
-        ProtoMsg.Message message = buildCommon(-1);
-        ProtoMsg.LoginRequest.Builder lb =
+
+        ProtoMsg.Message.Builder baseBuilder = getMsgBuilder(-1);
+
+
+           ProtoMsg.LoginRequest.Builder lb =
                 ProtoMsg.LoginRequest.newBuilder()
                         .setDeviceId(user.getDevId())
                         .setPlatform(user.getPlatform().ordinal())
                         .setToken(user.getToken())
                         .setUid(user.getUid());
-        return message.toBuilder().setLoginRequest(lb).build();
+
+        ProtoMsg.Message requestMsg = baseBuilder.setLoginRequest(lb).build();
+
+        return requestMsg;
     }
 
 
     public static ProtoMsg.Message buildLoginMsg(
             User user, ClientSession session) {
-        LoginMsgBuilder builder =
-                new LoginMsgBuilder(user, session);
-        return builder.build();
+        LoginMsgConverter converter =
+                new LoginMsgConverter(user, session);
+        return converter.build();
 
     }
+
+
 }
 
 

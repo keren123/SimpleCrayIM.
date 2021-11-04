@@ -1,12 +1,9 @@
 package client;
 
-import com.crazymakercircle.im.common.bean.User;
-import com.crazymakercircle.imClient.client.ClientSession;
 import com.crazymakercircle.imClient.command.BaseCommand;
 import com.crazymakercircle.imClient.command.ClientCommandMenu;
 import com.crazymakercircle.imClient.command.LoginConsoleCommand;
 import com.crazymakercircle.imClient.command.LogoutConsoleCommand;
-import com.crazymakercircle.imClient.sender.ChatSender;
 import com.crazymakercircle.util.Logger;
 import org.junit.Test;
 

@@ -2,20 +2,20 @@
  * Created by 尼恩 at 疯狂创客圈
  */
 
-package com.crazymakercircle.imClient.protoBuilder;
+package com.crazymakercircle.imClient.protoConverter;
 
 import com.crazymakercircle.im.common.bean.User;
 import com.crazymakercircle.im.common.bean.msg.ProtoMsg;
-import com.crazymakercircle.imClient.client.ClientSession;
+import com.crazymakercircle.imClient.session.ClientSession;
 
 
 /**
- * 心跳消息Builder
+ * 心跳消息 Converter
  */
-public class HeartBeatMsgBuilder extends BaseBuilder {
+public class HeartBeatMsgConverter extends BaseConverter {
     private final User user;
 
-    public HeartBeatMsgBuilder(User user, ClientSession session) {
+    public HeartBeatMsgConverter(User user, ClientSession session) {
         super(ProtoMsg.HeadType.HEART_BEAT, session);
         this.user = user;
     }

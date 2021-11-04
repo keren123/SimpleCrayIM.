@@ -1,6 +1,6 @@
 package com.crazymakercircle.imServer.processer;
 
-import com.crazymakercircle.imServer.server.ServerSession;
+import com.crazymakercircle.imServer.session.ServerSession;
 import io.netty.channel.Channel;
 
 public abstract class AbstractServerProcesser implements ServerProcesser {

@@ -1,7 +1,7 @@
 package com.crazymakercircle.imClient.handler;
 
 import com.crazymakercircle.im.common.exception.InvalidFrameException;
-import com.crazymakercircle.imClient.client.ClientSession;
+import com.crazymakercircle.imClient.session.ClientSession;
 import com.crazymakercircle.imClient.client.CommandController;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
