@@ -21,11 +21,9 @@ import java.util.UUID;
 public class ServerSession {
 
 
-    public static final AttributeKey<String> KEY_USER_ID =
-            AttributeKey.valueOf("key_user_id");
+    public static final AttributeKey<String> KEY_USER_ID =      AttributeKey.valueOf("key_user_id");
 
-    public static final AttributeKey<ServerSession> SESSION_KEY =
-            AttributeKey.valueOf("SESSION_KEY");
+    public static final AttributeKey<ServerSession> SESSION_KEY =    AttributeKey.valueOf("SESSION_KEY");
 
 
     /**
@@ -42,12 +40,8 @@ public class ServerSession {
     //登录状态
     private boolean isLogin = false;
 
-    /**
-     * session中存储的session 变量属性值
-     */
-    private Map<String, Object> map = new HashMap<String, Object>();
-
-    public ServerSession(Channel channel) {
+     public ServerSession(Channel channel) {
+        //完成正向绑定
         this.channel = channel;
         this.sessionId = buildNewSessionId();
     }
@@ -69,11 +63,12 @@ public class ServerSession {
         }
     }
 
-    //和channel 通道实现双向绑定
-    public ServerSession bind() {
+    //反向绑定，最终和channel 通道实现双向绑定
+    // 顺便加入到会话集合中
+    public ServerSession reverseBind() {
         log.info(" ServerSession 绑定会话 " + channel.remoteAddress());
         channel.attr(ServerSession.SESSION_KEY).set(this);
-        SessionMap.inst().addSession( this);
+        SessionMap.inst().addSession(this);
         isLogin = true;
         return this;
     }
@@ -94,14 +89,6 @@ public class ServerSession {
         return uuid.replaceAll("-", "");
     }
 
-    public synchronized void set(String key, Object value) {
-        map.put(key, value);
-    }
-
-
-    public synchronized <T> T get(String key) {
-        return (T) map.get(key);
-    }
 
 
     public boolean isValid() {
@@ -110,17 +97,17 @@ public class ServerSession {
 
     //写Protobuf数据帧
     public synchronized void writeAndFlush(Object pkg) {
-              //当系统水位过高时，系统应不继续发送消息，防止发送队列积压
+        //当系统水位过高时，系统应不继续发送消息，防止发送队列积压
         //写Protobuf数据帧
 
-            if (channel.isWritable()) //低水位
-            {
-                channel.writeAndFlush(pkg);
-            } else {   //高水位时
-                log.debug("通道很忙，消息被暂存了");
-                //写入消息暂存的分布式存储，如果mongo
-                //等channel空闲之后，再写出去
-            }
+        if (channel.isWritable()) //低水位
+        {
+            channel.writeAndFlush(pkg);
+        } else {   //高水位时
+            log.debug("通道很忙，消息被暂存了");
+            //写入消息暂存的分布式存储，如果mongo
+            //等channel空闲之后，再写出去
+        }
 
     }
 

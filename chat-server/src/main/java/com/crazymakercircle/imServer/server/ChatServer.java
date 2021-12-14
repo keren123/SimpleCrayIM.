@@ -35,8 +35,7 @@ public class ChatServer {
     private EventLoopGroup wg ;
 
     // 启动引导器
-    private ServerBootstrap b =
-            new ServerBootstrap();
+    private ServerBootstrap b =    new ServerBootstrap();
     @Autowired
     private LoginRequestHandler loginRequestHandler;
 
@@ -52,7 +51,8 @@ public class ChatServer {
         //传输处理线程组
         wg = new NioEventLoopGroup();
 
-        try {   //1 设置reactor 线程
+        try {
+            //1 设置reactor 线程
             b.group(bg, wg);
             //2 设置nio类型的channel
             b.channel(NioServerSocketChannel.class);
@@ -60,8 +60,8 @@ public class ChatServer {
             b.localAddress(new InetSocketAddress(port));
             //4 设置通道选项
 //            b.option(ChannelOption.SO_KEEPALIVE, true);
-            b.option(ChannelOption.ALLOCATOR,
-                    PooledByteBufAllocator.DEFAULT);
+            b.option(ChannelOption.ALLOCATOR,   PooledByteBufAllocator.DEFAULT);
+            b.childOption(ChannelOption.ALLOCATOR,   PooledByteBufAllocator.DEFAULT);
 
             //5 装配流水线
             b.childHandler(new ChannelInitializer<SocketChannel>() {

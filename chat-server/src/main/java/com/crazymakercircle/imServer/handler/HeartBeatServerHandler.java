@@ -43,7 +43,7 @@ public class HeartBeatServerHandler extends IdleStateHandler {
             });
 
         }
-        super.channelRead(ctx, msg);
+   // super.channelRead(ctx, msg);
 
     }
 

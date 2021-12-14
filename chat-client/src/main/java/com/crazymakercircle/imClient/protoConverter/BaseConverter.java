@@ -9,6 +9,7 @@ import com.crazymakercircle.imClient.session.ClientSession;
  * @author 尼恩 at  疯狂创客圈
  */
 public class BaseConverter {
+
     protected ProtoMsg.HeadType type;
     private long seqId;
     private ClientSession session;
@@ -21,12 +22,12 @@ public class BaseConverter {
     /**
      * 构建消息 基础部分
      */
-    public ProtoMsg.Message buildCommon(long seqId) {
+    public ProtoMsg.Message buildOuter(long seqId) {
 
-        return getMsgBuilder(seqId).buildPartial();
+        return getOuterBuilder(seqId).buildPartial();
     }
 
-    public ProtoMsg.Message.Builder getMsgBuilder(long seqId) {
+    public ProtoMsg.Message.Builder getOuterBuilder(long seqId) {
         this.seqId = seqId;
 
         ProtoMsg.Message.Builder mb =

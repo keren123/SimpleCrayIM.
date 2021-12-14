@@ -11,7 +11,7 @@ import java.util.List;
 
 @Slf4j
 @Service("ChatRedirectProcesser")
-public class ChatRedirectProcesser extends AbstractServerProcesser {
+public class ChatRedirectProcesser implements ServerProcesser {
     @Override
     public ProtoMsg.HeadType type() {
         return ProtoMsg.HeadType.MESSAGE_REQUEST;

@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 实现客户端 Session会话
@@ -21,8 +22,7 @@ import java.util.Map;
 public class ClientSession {
 
 
-    public static final AttributeKey<ClientSession> SESSION_KEY =
-            AttributeKey.valueOf("SESSION_KEY");
+    public static final AttributeKey<ClientSession> SESSION_KEY =   AttributeKey.valueOf("SESSION_KEY");
 
 
     /**
@@ -39,22 +39,20 @@ public class ClientSession {
     private boolean isConnected = false;
     private boolean isLogin = false;
 
-    /**
-     * session中存储的session 变量属性值
-     */
-    private Map<String, Object> map = new HashMap<String, Object>();
 
     //绑定通道
+    //连接成功之后
     public ClientSession(Channel channel) {
+        //正向的绑定
       this.channel = channel;
-        this.sessionId = String.valueOf(-1);
-        channel.attr(ClientSession.SESSION_KEY).set(this);
+      this.sessionId = UUID.randomUUID().toString();
+      //反向的绑定
+      channel.attr(ClientSession.SESSION_KEY).set(this);
     }
 
 
     //登录成功之后,设置sessionId
-    public static void loginSuccess(
-            ChannelHandlerContext ctx, ProtoMsg.Message pkg) {
+    public static void loginSuccess( ChannelHandlerContext ctx, ProtoMsg.Message pkg) {
         Channel channel = ctx.channel();
         ClientSession session = channel.attr(ClientSession.SESSION_KEY).get();
         session.setSessionId(pkg.getSessionId());

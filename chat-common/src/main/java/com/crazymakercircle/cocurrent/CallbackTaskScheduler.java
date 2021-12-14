@@ -15,11 +15,11 @@ import java.util.concurrent.ExecutorService;
  */
 public class CallbackTaskScheduler  {
     //方法二是使用自建的线程池时，专用于处理耗时操作
-    static ListeningExecutorService gPool = null;
+    static ListeningExecutorService guavaPool = null;
 
     static {
         ExecutorService jPool = ThreadUtil.getMixedTargetThreadPool();
-        gPool = MoreExecutors.listeningDecorator(jPool);
+        guavaPool = MoreExecutors.listeningDecorator(jPool);
     }
 
 
@@ -33,7 +33,7 @@ public class CallbackTaskScheduler  {
     public static <R> void add(CallbackTask<R> executeTask) {
 
 
-        ListenableFuture<R> future = gPool.submit(new Callable<R>() {
+        ListenableFuture<R> future = guavaPool.submit(new Callable<R>() {
             public R call() throws Exception {
 
                 R r = executeTask.execute();

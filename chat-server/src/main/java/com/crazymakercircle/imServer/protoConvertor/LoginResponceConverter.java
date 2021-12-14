@@ -10,9 +10,10 @@ public class LoginResponceConverter {
     /**
      * 登录应答 应答消息protobuf
      */
-    public ProtoMsg.Message loginResponce(
+    public ProtoMsg.Message build(
             ProtoInstant.ResultCodeEnum en, long seqId, String sessionId) {
-        ProtoMsg.Message.Builder mb = ProtoMsg.Message.newBuilder()
+
+        ProtoMsg.Message.Builder outer = ProtoMsg.Message.newBuilder()
                 .setType(ProtoMsg.HeadType.LOGIN_RESPONSE)  //设置消息类型
                 .setSequence(seqId)
                 .setSessionId(sessionId);  //设置应答流水，与请求对应
@@ -22,8 +23,8 @@ public class LoginResponceConverter {
                 .setInfo(en.getDesc())
                 .setExpose(1);
 
-        mb.setLoginResponse(b.build());
-        return mb.build();
+        outer.setLoginResponse(b.build());
+        return outer.build();
     }
 
 

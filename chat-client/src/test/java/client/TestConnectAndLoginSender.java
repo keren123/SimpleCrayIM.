@@ -63,7 +63,7 @@ public class TestConnectAndLoginSender {
 
 
 
-    private void initEnv() {
+    private void initBootstrap() {
         b.group(g);
         b.channel(NioSocketChannel.class);
         b.option(ChannelOption.SO_KEEPALIVE, true);
@@ -72,7 +72,7 @@ public class TestConnectAndLoginSender {
     }
 
 
-    GenericFutureListener<ChannelFuture> connectedListener = (ChannelFuture f) ->
+    GenericFutureListener<ChannelFuture> connectedListener_1 = (ChannelFuture f) ->
     {
         final EventLoop eventLoop
                 = f.channel().eventLoop();
@@ -95,7 +95,7 @@ public class TestConnectAndLoginSender {
     @Test
     public void testConnectSever() throws IOException
     {
-        initEnv();
+        initBootstrap();
         // 设置通道初始化
         b.handler(
                 new ChannelInitializer<SocketChannel>() {
@@ -106,9 +106,9 @@ public class TestConnectAndLoginSender {
                 }
         );
         log.info("测试用例：客户端开始连接 [疯狂创客圈IM]");
-
-        ChannelFuture f = b.connect();//异步发起连接
-        f.addListener(connectedListener);
+        //异步发起连接
+        ChannelFuture f = b.connect();
+        f.addListener(connectedListener_1);
 
         try {
             f.sync();
@@ -161,7 +161,7 @@ public class TestConnectAndLoginSender {
     @Test
     public void testLoginSender() throws IOException
     {
-        initEnv();
+        initBootstrap();
         // 设置通道初始化
         b.handler(
                 new ChannelInitializer<SocketChannel>() {
@@ -191,11 +191,12 @@ public class TestConnectAndLoginSender {
     @Test
     public void testLoginResponceHandler() throws IOException
     {
-        initEnv();
+        initBootstrap();
         // 设置通道初始化
         b.handler(
                 new ChannelInitializer<SocketChannel>() {
                     public void initChannel(SocketChannel ch) {
+                        ch.pipeline().addLast("encoder", new SimpleProtobufEncoder());
                         ch.pipeline().addLast("decoder", new SimpleProtobufDecoder());
                         ch.pipeline().addLast(loginResponseHandler);
                         ch.pipeline().addLast(exceptionHandler);

@@ -20,16 +20,17 @@ public class HeartBeatMsgConverter extends BaseConverter {
         this.user = user;
     }
 
-    public ProtoMsg.Message buildMsg() {
-        ProtoMsg.Message message = buildCommon(-1);
-        ProtoMsg.MessageHeartBeat.Builder lb =
+    public ProtoMsg.Message build() {
+
+        ProtoMsg.Message.Builder outerBuilder = getOuterBuilder(-1);
+
+        ProtoMsg.MessageHeartBeat.Builder inner =
                 ProtoMsg.MessageHeartBeat.newBuilder()
                         .setSeq(0)
                         .setJson("{\"from\":\"client\"}")
                         .setUid(user.getUid());
-        return message.toBuilder().setHeartBeat(lb).build();
+        return outerBuilder.setHeartBeat(inner).build();
     }
-
 
 }
 

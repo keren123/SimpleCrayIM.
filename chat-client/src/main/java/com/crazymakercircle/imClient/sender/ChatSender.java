@@ -18,7 +18,7 @@ public class ChatSender extends BaseSender {
         chatMsg.setTo(touid);
         chatMsg.setMsgId(System.currentTimeMillis());
         ProtoMsg.Message message =
-                ChatMsgConverter.buildChatMsg(chatMsg, getUser(), getSession());
+                ChatMsgConverter.build(chatMsg, getUser(), getSession());
 
         super.sendMsg(message);
     }

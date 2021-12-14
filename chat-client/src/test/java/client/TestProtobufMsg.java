@@ -50,7 +50,7 @@ public class TestProtobufMsg
             {
                   // 半包的处理
                 ch.pipeline().addLast("decoder", new SimpleProtobufDecoder());
-                ch.pipeline().addLast("encoder", new SimpleProtobufEncoder());
+//                ch.pipeline().addLast("encoder", new SimpleProtobufEncoder());
                 ch.pipeline().addLast("inHandler", new MockLoginRequestHandler());
 
             }
@@ -61,6 +61,7 @@ public class TestProtobufMsg
         {
             ByteBuf bytebuf= Unpooled.buffer(1024).order(ByteOrder.BIG_ENDIAN);;
             ProtoMsg.Message pkg = buildLoginMsg(new User());
+
             SimpleProtobufEncoder.encode0(pkg,bytebuf);
 
             channel.writeInbound(bytebuf);
@@ -77,9 +78,9 @@ public class TestProtobufMsg
     }
 
     /**
-     * 构建消息 基础部分 的 Builder
+     * 构建消息 整体 的 Builder
      */
-    public  static ProtoMsg.Message.Builder baseBuilder(long seqId) {
+    public  static ProtoMsg.Message.Builder outerBuilder(long seqId) {
 
         ProtoMsg.Message.Builder mb =
                 ProtoMsg.Message
@@ -92,14 +93,14 @@ public class TestProtobufMsg
 
 
     public  static ProtoMsg.Message buildLoginMsg(User user) {
-        ProtoMsg.Message.Builder  baseBuilder = baseBuilder(-1);
+        ProtoMsg.Message.Builder  outBuilder = outerBuilder(-1);
         ProtoMsg.LoginRequest.Builder lb =
                 ProtoMsg.LoginRequest.newBuilder()
                         .setDeviceId(user.getDevId())
                         .setPlatform(user.getPlatform().ordinal())
                         .setToken(user.getToken())
                         .setUid(user.getUid());
-        return baseBuilder.setLoginRequest(lb).build();
+        return outBuilder.setLoginRequest(lb).build();
     }
 
 

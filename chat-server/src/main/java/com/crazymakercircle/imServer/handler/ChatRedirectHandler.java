@@ -48,7 +48,7 @@ public class ChatRedirectHandler extends ChannelInboundHandlerAdapter {
             return;
         }
 
-        //异步处理IM消息转发的逻辑
+            //异步处理IM消息转发的逻辑
         FutureTaskScheduler.add(() ->
         {
             chatRedirectProcesser.action(session, pkg);

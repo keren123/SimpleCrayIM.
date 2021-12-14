@@ -22,7 +22,7 @@ public class LoginMsgConverter extends BaseConverter {
 
     public ProtoMsg.Message build() {
 
-        ProtoMsg.Message.Builder baseBuilder = getMsgBuilder(-1);
+        ProtoMsg.Message.Builder outerBuilder = getOuterBuilder(-1);
 
 
            ProtoMsg.LoginRequest.Builder lb =
@@ -32,16 +32,14 @@ public class LoginMsgConverter extends BaseConverter {
                         .setToken(user.getToken())
                         .setUid(user.getUid());
 
-        ProtoMsg.Message requestMsg = baseBuilder.setLoginRequest(lb).build();
+        ProtoMsg.Message requestMsg = outerBuilder.setLoginRequest(lb).build();
 
         return requestMsg;
     }
 
 
-    public static ProtoMsg.Message buildLoginMsg(
-            User user, ClientSession session) {
-        LoginMsgConverter converter =
-                new LoginMsgConverter(user, session);
+    public static ProtoMsg.Message build(  User user, ClientSession session) {
+        LoginMsgConverter converter =  new LoginMsgConverter(user, session);
         return converter.build();
 
     }

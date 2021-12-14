@@ -50,15 +50,22 @@ public class SimpleProtobufDecoder extends ByteToMessageDecoder {
         short magic = in.readShort();
         if (magic != ProtoInstant.MAGIC_CODE) {
             String error = "客户端口令不对:" + ctx.channel().remoteAddress();
+            //异常连接，直接报错，关闭连接
             throw new InvalidFrameException(error);
         }
         //读取版本
         short version = in.readShort();
+        if (version != ProtoInstant.VERSION_CODE) {
+            String error = "协议的版本不对:" + ctx.channel().remoteAddress();
+            //异常连接，直接报错，关闭连接
+            throw new InvalidFrameException(error);
+        }
         // 读取传送过来的消息的长度。
         int length = in.readInt();
 
         // 长度如果小于0
-        if (length < 0) {// 非法数据，关闭连接
+        if (length < 0) {
+            // 非法数据，关闭连接
             ctx.close();
         }
 

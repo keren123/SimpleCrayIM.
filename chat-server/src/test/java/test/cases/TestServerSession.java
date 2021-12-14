@@ -26,7 +26,7 @@ public class TestServerSession {
         serverSession.setUser(new User());
 
         Logger.cfo(JsonUtil.pojoToJson(serverSession.getUser()));
-        serverSession.bind();
+        serverSession.reverseBind();
 
         Channel channel=serverSession.getChannel();
 
@@ -46,7 +46,7 @@ public class TestServerSession {
         for (int i = 0; i < 10; i++) {
             ServerSession serverSession=new ServerSession(new EmbeddedChannel());
             serverSession.setUser(user);
-            serverSession.bind();
+            serverSession.reverseBind();
         }
         Logger.cfo("eg:用户查找");
         List<ServerSession> list = SessionMap.inst().getSessionsBy(user.getUid());

@@ -29,10 +29,12 @@ public class HeartBeatClientHandler extends ChannelInboundHandlerAdapter {
         HeartBeatMsgConverter builder =
                 new HeartBeatMsgConverter(user, session);
 
-        ProtoMsg.Message message = builder.buildMsg();
+        ProtoMsg.Message message = builder.build();
         //发送心跳
         heartBeat(ctx, message);
     }
+
+
 
     //使用定时器，发送心跳报文
     public void heartBeat(ChannelHandlerContext ctx,

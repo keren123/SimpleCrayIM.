@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service("LoginProcesser")
-public class LoginProcesser extends AbstractServerProcesser {
+public class LoginProcesser implements ServerProcesser {
     @Autowired
     LoginResponceConverter loginResponceConverter;
 
@@ -37,7 +37,7 @@ public class LoginProcesser extends AbstractServerProcesser {
                     ProtoInstant.ResultCodeEnum.NO_TOKEN;
             //构造登录失败的报文
             ProtoMsg.Message response =
-                    loginResponceConverter.loginResponce(resultcode, seqNo, "-1");
+                    loginResponceConverter.build(resultcode, seqNo, "-1");
             //发送登录失败的报文
             session.writeAndFlush(response);
             return false;
@@ -47,15 +47,13 @@ public class LoginProcesser extends AbstractServerProcesser {
 
 
         //服务端session和传输channel绑定的核心代码
-        session.bind();
+        session.reverseBind();
 
         //登录成功
         ProtoInstant.ResultCodeEnum resultcode =
                 ProtoInstant.ResultCodeEnum.SUCCESS;
         //构造登录成功的报文
-        ProtoMsg.Message response =
-                loginResponceConverter.loginResponce(
-                        resultcode, seqNo, session.getSessionId());
+        ProtoMsg.Message response =  loginResponceConverter.build(resultcode, seqNo, session.getSessionId());
         //发送登录成功的报文
         session.writeAndFlush(response);
         return true;

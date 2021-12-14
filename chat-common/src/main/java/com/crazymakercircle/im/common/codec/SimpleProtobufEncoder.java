@@ -30,7 +30,7 @@ public class SimpleProtobufEncoder extends MessageToByteEncoder<ProtoMsg.Message
         out.writeShort(ProtoInstant.MAGIC_CODE);
         out.writeShort(ProtoInstant.VERSION_CODE);
 
-        byte[] bytes = msg.toByteArray();// 将对象转换为byte
+        byte[] bytes = msg.toByteArray();// 将 ProtoMsg.Message 对象转换为byte
 
         // 加密消息体
         /*ThreeDES des = channel.channel().attr(Constants.ENCRYPT).get();

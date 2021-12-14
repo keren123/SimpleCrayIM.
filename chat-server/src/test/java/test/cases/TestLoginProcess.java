@@ -23,11 +23,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteOrder;
+import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ServerApplication.class)
 @Slf4j
-public class TestLoginService {
+public class TestLoginProcess {
     @Autowired
     private LoginRequestHandler loginRequestHandler;
 
@@ -36,6 +37,7 @@ public class TestLoginService {
 
     @Test
     public void testLoginProcess() throws Exception {
+
         ChannelInitializer i = new ChannelInitializer<EmbeddedChannel>() {
             protected void initChannel(EmbeddedChannel ch) {
                 // 管理pipeline中的Handler
@@ -44,6 +46,7 @@ public class TestLoginService {
                 ch.pipeline().addLast("login",loginRequestHandler);
             }
         };
+
         EmbeddedChannel channel = new EmbeddedChannel(i);
 
         User user=new User();
@@ -60,53 +63,23 @@ public class TestLoginService {
     }
 
 
-    //第1种方式:序列化 serialization & 反序列化 Deserialization
-    @Test
-    public void serAndDesr1() throws IOException
-    {
-
-        User user=new User();
-        ProtoMsg.Message  message = buildLoginMsg(user);
-        //将Protobuf对象，序列化成二进制字节数组
-        byte[] data = message.toByteArray();
-        //可以用于网络传输,保存到内存或外存
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        outputStream.write(data);
-        data = outputStream.toByteArray();
-        //二进制字节数组,反序列化成Protobuf 对象
-        ProtoMsg.Message  inMsg =  ProtoMsg.Message.parseFrom(data);
-
-        ProtoMsg.LoginRequest info = inMsg.getLoginRequest();
-        long seqNo = inMsg.getSequence();
-
-        User user2 = User.fromMsg(info);
-
-        Logger.info("user2:=" + user2);
-    }
-
-
     public ProtoMsg.Message buildLoginMsg(User user) {
-        ProtoMsg.Message message = buildCommon(-1);
+
+        ProtoMsg.Message.Builder outer =
+                ProtoMsg.Message.newBuilder()
+                        .setType(ProtoMsg.HeadType.LOGIN_REQUEST)
+                        .setSessionId(UUID.randomUUID().toString())
+                        .setSequence(-1);
+
+
         ProtoMsg.LoginRequest.Builder lb =
                 ProtoMsg.LoginRequest.newBuilder()
                         .setDeviceId(user.getDevId())
                         .setPlatform(user.getPlatform().ordinal())
                         .setToken(user.getToken())
                         .setUid(user.getUid());
-        return message.toBuilder().setLoginRequest(lb).build();
+        return outer.setLoginRequest(lb).build();
     }
 
-       /**
-     * 构建消息 基础部分
-     */
-    public ProtoMsg.Message buildCommon(long seqId) {
 
-        ProtoMsg.Message.Builder mb =
-                ProtoMsg.Message
-                        .newBuilder()
-                        .setType(ProtoMsg.HeadType.LOGIN_REQUEST)
-                        .setSessionId("-1")
-                        .setSequence(seqId);
-        return mb.buildPartial();
-    }
 }

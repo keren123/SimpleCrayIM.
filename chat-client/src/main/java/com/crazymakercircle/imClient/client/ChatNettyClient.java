@@ -60,7 +60,7 @@ public class ChatNettyClient {
     private User user;
     private GenericFutureListener<ChannelFuture> connectedListener;
 
-    private Bootstrap b;
+    private Bootstrap bootstrap;
     private EventLoopGroup g;
 
     public ChatNettyClient() {
@@ -74,7 +74,7 @@ public class ChatNettyClient {
          * 通过nio方式来接收连接和处理连接
          */
 
-        g = new NioEventLoopGroup();
+        g = new NioEventLoopGroup(1);
 
 
     }
@@ -84,16 +84,16 @@ public class ChatNettyClient {
      */
     public void doConnect() {
         try {
-            b = new Bootstrap();
+            bootstrap = new Bootstrap();
 
-            b.group(g);
-            b.channel(NioSocketChannel.class);
-            b.option(ChannelOption.SO_KEEPALIVE, true);
-            b.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
-            b.remoteAddress(host, port);
+            bootstrap.group(g);
+            bootstrap.channel(NioSocketChannel.class);
+            bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
+            bootstrap.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
+            bootstrap.remoteAddress(host, port);
 
             // 设置通道初始化
-            b.handler(
+            bootstrap.handler(
                     new ChannelInitializer<SocketChannel>() {
                         public void initChannel(SocketChannel ch) {
                             ch.pipeline().addLast("decoder", new SimpleProtobufDecoder());
@@ -106,12 +106,12 @@ public class ChatNettyClient {
             );
             log.info("客户端开始连接 [疯狂创客圈IM]");
 
-            ChannelFuture f = b.connect();//异步发起连接
+            ChannelFuture f = bootstrap.connect();//异步发起连接
             f.addListener(connectedListener);
 
 
             // 阻塞
-            // f.channel().closeFuture().sync();
+//             f.channel().closeFuture().sync();
 
         } catch (Exception e) {
             log.info("客户端连接失败!" + e.getMessage());

@@ -14,7 +14,7 @@ public class LoginSender extends BaseSender {
         log.info("构造登录消息");
 
         ProtoMsg.Message message =
-                LoginMsgConverter.buildLoginMsg(getUser(), getSession());
+                LoginMsgConverter.build(getUser(), getSession());
         log.info("发送登录消息");
         super.sendMsg(message);
     }

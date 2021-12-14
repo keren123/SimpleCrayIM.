@@ -80,8 +80,7 @@ public class ServerApplication {
 
     //启动聊天服务器
     private static void startChatServer(ApplicationContext context) {
-        ChatServer nettyServer =
-                context.getBean(ChatServer.class);
+        ChatServer nettyServer =  context.getBean(ChatServer.class);
         nettyServer.run();
     }
 

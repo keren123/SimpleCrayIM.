@@ -36,10 +36,15 @@ public class ExceptionHandler extends ChannelInboundHandlerAdapter {
             ctx.close();
 
 
+            if (null == commandController) {
+                return;
+            }
             //开始重连
             commandController.setConnectFlag(false);
             commandController.startConnectServer();
         }
+//        super.exceptionCaught(ctx,cause);
+
     }
 
     /**

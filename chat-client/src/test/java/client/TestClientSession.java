@@ -26,10 +26,13 @@ public class TestClientSession {
 
         Logger.cfo(JsonUtil.pojoToJson(session.getUser()));
 
+        Logger.cfo("eg:正向导航");
+
         Channel channel=session.getChannel();
 
         Logger.cfo("eg:反向导航");
         Attribute<ClientSession> r_session = channel.attr(ClientSession.SESSION_KEY);
+
         Logger.cfo(JsonUtil.pojoToJson(r_session.get().getUser()));
 
     }
